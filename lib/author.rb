@@ -14,4 +14,16 @@ class Author < ActiveRecord::Base
     end
     author
   end
+
+  def average_books_rating
+    total = 0
+    books.each do |book|
+      total += book.average_rating
+    end
+    (total / books.count).round(2)
+  end
+
+  def most_reviewed_books
+    books.sort_by(&:ratings_count)
+  end
 end
