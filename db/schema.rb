@@ -10,10 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180102192737) do
+ActiveRecord::Schema.define(version: 20180103022013) do
 
   create_table "authors", force: :cascade do |t|
     t.string "name"
+    t.string "goodreads_id"
+    t.string "goodreads_url"
   end
 
   create_table "books", force: :cascade do |t|
@@ -21,6 +23,14 @@ ActiveRecord::Schema.define(version: 20180102192737) do
     t.integer "genre_id"
     t.integer "author_id"
     t.integer "published_date"
+    t.string  "goodreads_id"
+    t.string  "goodreads_url"
+    t.string  "isbn"
+    t.integer "page_count"
+    t.string  "publisher"
+    t.float   "average_rating"
+    t.integer "ratings_count"
+    t.text    "description"
   end
 
   create_table "genres", force: :cascade do |t|
