@@ -7,5 +7,9 @@ author_id_array.each do |author_id|
   author = RestClient.get("https://www.goodreads.com/author/list/#{author_id}?format=xml&key=8dQUUUZ8wokkPMjjn2oRxA")
   author_hash = Nokogiri::XML(author)
   author_name = author_hash.xpath("//name").first.text
-  Author.create(name: author_name)
+  author_instance = Author.create(name: author_name)
+  author_hash.css("title").each do |title|
+    Book.create(title: title.text, author: author_instance)
+    
+  end
 end
