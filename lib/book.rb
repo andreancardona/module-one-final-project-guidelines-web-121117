@@ -27,6 +27,24 @@ class Book < ActiveRecord::Base
     Book.create(title: title, genre: genre, author: author, published_date: published_date, goodreads_id: goodreads_id, goodreads_url: goodreads_url, publisher: publisher, isbn: isbn, page_count: page_count, average_rating: average_rating, ratings_count: ratings_count, description: description)
   end
 
+  def self.create_book_from_url(url)
+    book = RestClient.get("#{url}?format=xml&key=8dQUUUZ8wokkPMjjn2oRxA")
+    book_hash = Nokogiri::XML(book)
+    author = Author.find_or_create_by_id(book_hash.css("author").css("id").first.text)
+    title = book_hash.css("title").first.text
+    isbn = book_hash.css("isbn").first.text
+    published_date = book_hash.css("original_publication_year").first.text
+    goodreads_id = book_hash.css("id").first.text
+    goodreads_url = book_hash.css("link").first.text
+    publisher = book_hash.css("publisher").first.text
+    page_count = book_hash.css("num_pages").first.text
+    description = book_hash.css("description").first.text
+    average_rating = book_hash.css("average_rating").first.text
+    ratings_count = book_hash.css("ratings_count").first.text
+    genre = find_best_genre(book_hash)
+    Book.create(title: title, genre: genre, author: author,  published_date: published_date, goodreads_id: goodreads_id, goodreads_url: goodreads_url, publisher: publisher, isbn: isbn, page_count: page_count, average_rating: average_rating, ratings_count: ratings_count, description: description)
+  end
+
   def self.find_best_genre(book)
     # book = RestClient.get("#{book_instance.goodreads_url}?format=xml&key=8dQUUUZ8wokkPMjjn2oRxA")
     # book_hash = Nokogiri::XML(book) #converts to XML format 
@@ -37,7 +55,6 @@ class Book < ActiveRecord::Base
     correct_shelf = shelves_array.find do |shelf|
       !Genre.unwanted_shelves.include?(shelf)
     end
-    # binding.pry
     Book.assign_genre_to_book(correct_shelf)
   end
 

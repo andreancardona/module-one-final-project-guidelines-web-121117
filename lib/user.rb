@@ -18,4 +18,11 @@ class User < ActiveRecord::Base
     user
   end
 
+  def self.list_users
+    puts "ID   Name"
+    User.all.each do |user|
+      puts "#{user.id}  #{user.name}"
+    end
+  end
+
 end

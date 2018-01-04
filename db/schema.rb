@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20180103162053) do
     t.string   "content"
     t.datetime "reviewed_date"
     t.integer  "user_id"
+    t.integer  "book_id"
   end
 
   create_table "users", force: :cascade do |t|
