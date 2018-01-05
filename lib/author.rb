@@ -59,7 +59,7 @@ class Author < ActiveRecord::Base
         books_urls_array << book.children.css("link").first.text
       end
       books_urls_array.each do |url|
-        Book.create_book_from_url(url)
+        Book.create_book_from_author_and_url(url, author_instance)
       end
       books_urls_array = []
     end

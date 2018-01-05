@@ -5,5 +5,6 @@ class Session
     @current_user = nil
     @current_book = nil
     @current_author = nil
+    @last_menu = nil
   end
 end
