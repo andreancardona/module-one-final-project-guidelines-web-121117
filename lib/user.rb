@@ -24,5 +24,4 @@ class User < ActiveRecord::Base
       puts "#{user.id}  #{user.name}"
     end
   end
-
 end

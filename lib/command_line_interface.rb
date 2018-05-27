@@ -1,5 +1,4 @@
 class CommandLineInterface
-
   attr_accessor :session
 
   def initialize
@@ -81,7 +80,10 @@ class CommandLineInterface
   def parse_book_menu_input
     input = gets.chomp.downcase
     case input
-    when "1" then system "open #{session.current_book.goodreads_url}"
+    when "1" then
+      system "open #{session.current_book.goodreads_url}"
+      puts "Enter 'back' to go to the previous menu or '2' to view or add a review for this book"
+      parse_book_menu_input
     when "2" then find_or_add_review
     when "logout" then logout
     when "exit" then goodbye
@@ -113,6 +115,7 @@ class CommandLineInterface
         book_menu_options
       end
     end
+    book_menu_options
   end
 
   def main_find_author_by_name
@@ -197,6 +200,7 @@ class CommandLineInterface
       puts "Your rating: #{review.rating}   Average rating: #{review.book.average_rating} from #{review.book.ratings_count} reviews"
       puts "Your review: #{review.content}\n\n"
     end
+    main_menu_options
   end
 
   def logout

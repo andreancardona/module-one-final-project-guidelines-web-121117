@@ -27,5 +27,4 @@ class Review < ActiveRecord::Base
     data << review_hash.css("book_id").text
     data << review_hash.css("user_review").text
   end
-
 end
